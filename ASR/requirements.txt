@@ -1,0 +1,8 @@
+datasets
+transformers
+torchaudio
+soundfile
+evaluate
+librosa
+numpy
+scikit-learn
