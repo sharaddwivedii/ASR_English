@@ -35,13 +35,25 @@ python transcriber.py path/to/your/audiofile.wav
 ```
 ## **Customization**
 
-### **Using a Different Database**
+### Steps to Use a Different Database:
 
-If you want to use a different database for training, update the data loading and preprocessing steps in the `ASR_Eng.ipynb` notebook. Ensure that your data is properly formatted and loaded into the notebook for training.
+1. **Identify Your New Database:**
+   - Determine the name and subset (if applicable) of the new database you want to use.
 
-1. **Modify Data Loading**: Update the notebook sections where the data is loaded to reflect the structure and location of your new database.
-2. **Adjust Preprocessing**: Ensure that the preprocessing steps (e.g., resampling, normalization) are appropriate for your new dataset.
-3. **Save Preprocessed Data**: Save the preprocessed data in a format suitable for training (e.g., PyTorch tensors).
+2. **Modify Data Loading:**
+   - Replace the existing dataset name and subset in the code with your new database name and subset.
+   - Example modification:
+     ```python
+     from datasets import load_dataset
+
+     # Replace "your_dataset_name" and "subset_name" with the appropriate values for your new database
+     new_train = load_dataset("your_dataset_name", "subset_name", split="train+validation", trust_remote_code=True)
+     new_test = load_dataset("your_dataset_name", "subset_name", split="test", trust_remote_code=True)
+
+     # Remove unnecessary columns
+     new_train = new_train.remove_columns(["accent", "age", "client_id", "down_votes", "gender", "locale", "segment", "up_votes"])
+     new_test = new_test.remove_columns(["accent", "age", "client_id", "down_votes", "gender", "locale", "segment", "up_votes"])
+     ```
 
 ### **Inputting Your Own Audio Files**
 
